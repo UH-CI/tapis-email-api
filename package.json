@@ -1,0 +1,22 @@
+{
+  "name": "chord_agave_api",
+  "version": "0.0.1",
+  "description": "API to that extends Agave to use Chords service.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sean Cleveland",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "qs": "^6.5.2",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2",
+    "event-stream": "3.3.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  }
+}
