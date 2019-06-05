@@ -7,7 +7,7 @@ const request        = require('request');
 const qs             = require('qs');
 var querystring      = require('querystring');
 const rp             = require('request-promise');
-
+const nodemailer     = require("nodemailer");
 
 var configFile = require('./config.js');
 
@@ -62,37 +62,34 @@ app.post('/email', cors(corsOptions),function (req, res) {
   //fetch agave profile
   rp.get(get_profile_options)
    .then(function (response) {
-     console.log(response)
-	   var nodemailer = require('nodemailer');
+     console.log(response);
+     if(response.result.email != null){
+       var transporter = nodemailer.createTransport({
+  		     host: smtp,
+           port: smtp_port,
+           secure: false
+  	   });
+       console.log(req.query)
+  	   var mailOptions = {
+  		     from: req.query.from,
+  		     to: req.query.to,
+  		     subject: req.query.subject,
+  		     text: req.query.message
+  	   };
 
-	   var transporter = nodemailer.createTransport({
-		     service: smtp,
-		     auth: {
-			         user: smtp_user,
-			         pass: smtp_pass
-			       }
-	   });
-
-	   var mailOptions = {
-		     from: req.query.from,
-		     to: req.query.to,
-		     subject: req.query.subject,
-		     text: req.query.message
-	   };
-
-	   transporter.sendMail(mailOptions, function(error, info){
-	     if (error) {
-	       res.send("errro":error);
-	       console.log(error);
-             } else {
-	        res.send('Email sent: ' + info.response);
-		console.log('Email sent: ' + info.response);
-             }
-	   });
-   })
+  	   transporter.sendMail(mailOptions, function(error, info){
+  	     if (error) {
+  	       res.json({error: error});
+  	       console.log(error);
+        } else {
+  	       res.json({success:  info.response});
+  		     console.log('Email sent: ' + info.response);
+        }
+  	   });
+     }
+   })//end profile then
   .catch(function (err) {
      console.log(err)
      res.send(err)
    });//catch for profile fetch
 })
-

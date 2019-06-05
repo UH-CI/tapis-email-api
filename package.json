@@ -1,7 +1,7 @@
 {
-  "name": "chord_agave_api",
+  "name": "tapis_email_api",
   "version": "0.0.1",
-  "description": "API to that extends Agave to use Chords service.",
+  "description": "API to that extends Tapis to send emails.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,11 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "event-stream": "3.3.4",
     "express": "^4.16.4",
+    "nodemailer": "^6.2.1",
     "qs": "^6.5.2",
     "request": "^2.88.0",
-    "request-promise": "^4.2.2",
-    "event-stream": "3.3.4"
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "nodemon": "^1.18.5"
