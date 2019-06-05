@@ -13,7 +13,7 @@ var configFile = require('./config.js');
 
 //restrict CORS to hosts listed in config.js file
 var corsOptions ={
-  "origin": configFile.hosts,
+  "origin": '*',//configFile.hosts,
   "preflightContinue": true,
   "credentials":true
 }
@@ -26,10 +26,25 @@ const smtp = configFile.smtp;
 const smtp_port = configFile.smtp_port;
 const smtp_user = configFile.smtp_user;
 const smtp_pass = configFile.smtp_pass;
+var https = require('https')
+
+var fs = require("fs");
+var hskey = fs.readFileSync('ca.key');
+var hscert = fs.readFileSync('ca.crt');
+var options = {
+    key: hskey,
+    cert: hscert
+};
+
 // listen for new web clients:
-app.listen(port, () => {
- console.log("Server running on port: "+port);
-});
+//app.listen(port, () => {
+// console.log("Server running on port: "+port);
+//});
+
+var server = https.createServer(options,app)
+//var io = require('socket.io').listen(server);
+// listen for new web clients:
+server.listen(port);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
